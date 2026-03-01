@@ -1,0 +1,29 @@
+{
+  "name": "dobble-card-generator",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "seedrandom": "^3.0.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/seedrandom": "^3.0.8",
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "~5.6.2",
+    "vite": "^7.3.1"
+  }
+}
