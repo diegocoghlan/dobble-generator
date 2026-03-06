@@ -1,8 +1,10 @@
 import { useCallback, useRef, useState } from 'react'
 import { useApp } from '../context/AppContext'
+import { useLocale } from '../context/LocaleContext'
 import { isAcceptedFile, resizeImageToDataUrl } from '../utils/resizeImage'
 
 export function UploadZone() {
+  const { t } = useLocale()
   const { images, setImages, setImageAtIndex, clearImages, gameMode } = useApp()
   const required = gameMode.cardCount
   const [error, setError] = useState<string | null>(null)
@@ -22,7 +24,7 @@ export function UploadZone() {
       const fileArray = Array.from(files)
       const invalid = fileArray.find((f) => !isAcceptedFile(f))
       if (invalid) {
-        setError(`Formato no válido: "${invalid.name}". Usa JPG, PNG, WEBP o SVG.`)
+        setError(t('upload.invalidFormat', { name: invalid.name }))
         return
       }
 
@@ -60,7 +62,7 @@ export function UploadZone() {
         setPendingSlot(null)
       }
     },
-    [required, images, setImages]
+    [required, images, setImages, t]
   )
 
   const handleDrop = useCallback(
@@ -108,12 +110,12 @@ export function UploadZone() {
   const handleClickZone = () => inputRef.current?.click()
 
   return (
-    <section aria-label="Zona de subida de imágenes">
-      <p className="text-slate-700 mb-2">
-        Este modo usa <strong>{required} símbolos</strong>. Sube <strong>{required} imágenes</strong> (una por cada símbolo).
+    <section aria-label={t('upload.ariaLabel')}>
+      <p className="text-palette-primary mb-2">
+        {t('upload.description', { count: required })}
       </p>
-      <p className="text-slate-600 text-sm mb-4">
-        {filledCount} de {required} subidas. Puedes añadir de una en una o varias a la vez, y quitar cualquiera con la X.
+      <p className="text-palette-muted text-sm mb-6">
+        {t('upload.count', { filled: filledCount, required })}
       </p>
 
       <div
@@ -129,8 +131,9 @@ export function UploadZone() {
           }
         }}
         className={`
-          border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-colors mb-4
-          ${hasAll ? 'border-emerald-500 bg-emerald-50' : 'border-slate-300 bg-white hover:border-slate-400'}
+          border-2 border-dashed rounded-10 p-6 text-center cursor-pointer transition-colors mb-8
+          bg-palette-surface text-palette-primary
+          ${hasAll ? 'border-palette-accent' : 'border-palette-accent hover:border-palette-accentHover'}
         `}
       >
         <input
@@ -151,11 +154,9 @@ export function UploadZone() {
           aria-hidden
         />
         {loading ? (
-          <p className="text-slate-600">Procesando imágenes…</p>
+          <p className="text-palette-muted">{t('upload.processing')}</p>
         ) : (
-          <p className="text-slate-600">
-            Arrastra aquí varias imágenes o haz clic para elegir. Se asignarán a los huecos libres.
-          </p>
+          <p className="text-palette-primary">{t('upload.dropHint')}</p>
         )}
       </div>
 
@@ -165,20 +166,24 @@ export function UploadZone() {
         </p>
       )}
 
-      <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3">
+      <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-6 mt-2">
         {images.map((url, index) => (
           <div
             key={index}
             data-slot={index}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
-            className="relative rounded-lg border-2 border-slate-200 overflow-hidden bg-slate-50 aspect-square"
+            className={`relative rounded-10 overflow-hidden aspect-square border-2 transition-colors group ${
+              url
+                ? 'border-solid border-palette-accent bg-white'
+                : 'border-dashed border-palette-border bg-white hover:border-palette-accent'
+            }`}
           >
             {url ? (
               <>
                 <img
                   src={url}
-                  alt={`Símbolo ${index + 1}`}
+                  alt={t('upload.symbolN', { n: index + 1 })}
                   className="w-full h-full object-contain"
                 />
                 <button
@@ -188,10 +193,10 @@ export function UploadZone() {
                     setImageAtIndex(index, null)
                   }}
                   className="absolute top-1 right-1 p-1 rounded-full bg-red-500 text-white text-xs font-medium shadow hover:bg-red-600"
-                  title="Quitar esta imagen"
-                  aria-label={`Quitar imagen del símbolo ${index + 1}`}
+                  title={t('upload.removeTitle')}
+                  aria-label={t('upload.removeSymbolA11y', { n: index + 1 })}
                 >
-                  Quitar
+                  {t('upload.remove')}
                 </button>
                 <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs py-0.5 text-center">
                   {index + 1}
@@ -204,10 +209,10 @@ export function UploadZone() {
                   e.stopPropagation()
                   openAddToSlot(index)
                 }}
-                className="w-full h-full flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 hover:border-slate-400 border-dashed border-2 border-slate-200 rounded-lg transition-colors"
+                className="w-full h-full flex flex-col items-center justify-center text-palette-primary rounded-10 transition-all group"
               >
-                <span className="text-2xl mb-1">+</span>
-                <span className="text-xs">Símbolo {index + 1}</span>
+                <span className="inline-block text-2xl mb-1 text-palette-accent transition-transform group-hover:scale-110">+</span>
+                <span className="text-xs">{t('upload.symbolN', { n: index + 1 })}</span>
               </button>
             )}
           </div>
@@ -218,9 +223,9 @@ export function UploadZone() {
         <button
           type="button"
           onClick={clearImages}
-          className="mt-4 text-slate-500 hover:text-slate-700 text-sm underline"
+          className="mt-4 text-palette-muted hover:text-palette-accent text-sm underline"
         >
-          Vaciar todo y volver a subir
+          {t('upload.clearAll')}
         </button>
       )}
     </section>

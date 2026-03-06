@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { AppProvider, useApp } from './context/AppContext'
+import { useLocale } from './context/LocaleContext'
 import { GameModeSelector } from './components/GameModeSelector'
 import { UploadZone } from './components/UploadZone'
+import { LanguageSelector } from './components/LanguageSelector'
 import { exportDeckToPdf } from './utils/pdfExport'
 
 function PdfPreviewModal({
@@ -11,6 +13,7 @@ function PdfPreviewModal({
   pdfUrl: string
   onClose: () => void
 }) {
+  const { t } = useLocale()
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
@@ -18,24 +21,24 @@ function PdfPreviewModal({
       aria-modal="true"
       aria-labelledby="pdf-preview-title"
     >
-      <div className="flex max-h-[90vh] w-full max-w-4xl flex-col rounded-xl bg-white shadow-xl">
-        <div className="flex shrink-0 items-center justify-between border-b border-slate-200 px-4 py-3">
-          <h2 id="pdf-preview-title" className="text-lg font-semibold text-slate-800">
-            Vista previa del PDF
+      <div className="flex max-h-[90vh] w-full max-w-4xl flex-col rounded-xl bg-palette-surface shadow-xl">
+        <div className="flex shrink-0 items-center justify-between border-b border-palette-border px-4 py-3">
+          <h2 id="pdf-preview-title" className="text-lg font-semibold text-palette-primary">
+            {t('pdfPreview.title')}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+            className="rounded-10 border border-palette-border bg-palette-surface px-4 py-2 text-palette-primary hover:bg-palette-bg focus:outline-none focus:ring-2 focus:ring-palette-accent focus:ring-offset-2"
           >
-            Cerrar
+            {t('pdfPreview.close')}
           </button>
         </div>
         <div className="min-h-0 flex-1 overflow-auto p-4">
           <iframe
             src={pdfUrl}
-            title="Vista previa del PDF"
-            className="w-full rounded border border-slate-200 bg-white"
+            title={t('pdfPreview.title')}
+            className="w-full rounded-10 border border-palette-border bg-palette-surface"
             style={{ height: '600px' }}
           />
         </div>
@@ -45,6 +48,7 @@ function PdfPreviewModal({
 }
 
 function AppContent() {
+  const { t } = useLocale()
   const { gameMode, images, layoutByCard, cardData } = useApp()
   const required = gameMode.cardCount
   const hasImages = images.length === required && images.every(Boolean)
@@ -58,7 +62,7 @@ function AppContent() {
     setIsGeneratingPdf(true)
     exportDeckToPdf(images as string[], layoutByCard, cardData)
       .then((url) => setPdfPreviewUrl(url))
-      .catch((err) => console.error('Error al generar PDF', err))
+      .catch((err) => console.error('Error generating PDF', err))
       .finally(() => setIsGeneratingPdf(false))
   }
 
@@ -70,10 +74,15 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 py-8 px-4">
-      <header className="max-w-4xl mx-auto mb-8 text-center">
-        <h1 className="text-3xl font-bold text-slate-800">Spot It (Dobble) Card Generator</h1>
-        <p className="text-slate-600 mt-2">Elige el modo, sube las imágenes y genera tu baraja imprimible.</p>
+    <div className="min-h-screen bg-[#F9FAFB] py-8 px-4">
+      <header className="max-w-4xl mx-auto mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div>
+            <h1 className="text-3xl font-bold text-palette-primary">{t('app.title')}</h1>
+            <p className="text-palette-muted mt-2">{t('app.subtitle')}</p>
+          </div>
+          <LanguageSelector />
+        </div>
       </header>
 
       <main className="max-w-4xl mx-auto space-y-8">
@@ -86,10 +95,10 @@ function AppContent() {
               type="button"
               onClick={handleGeneratePdf}
               disabled={isGeneratingPdf}
-              className="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed font-medium"
-              aria-label="Generar PDF de la baraja"
+              className="px-6 py-3 bg-palette-accent text-white rounded-10 hover:bg-palette-accentHover focus:outline-none focus:ring-2 focus:ring-palette-accent focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed font-medium"
+              aria-label={t('actions.generatePdfA11y')}
             >
-              {isGeneratingPdf ? 'Generando…' : 'Generar PDF'}
+              {isGeneratingPdf ? t('actions.generating') : t('actions.generatePdf')}
             </button>
           </section>
         )}
