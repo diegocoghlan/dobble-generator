@@ -47,7 +47,7 @@ export function CardPreview({
         height: sizePx,
         borderRadius: '50%',
         overflow: 'hidden',
-        border: '1px dashed #ccc',
+        border: '1px dashed var(--color-border)',
       }}
     >
       {placements.map((p, i) => {
@@ -75,7 +75,7 @@ export function CardPreview({
               borderRadius: '50%',
               backgroundColor: '#ffffff',
               boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
-              border: '1px solid #eee',
+              border: '1px solid var(--color-border)',
               ...(p.zIndex != null && { zIndex: p.zIndex }),
             }}
           >

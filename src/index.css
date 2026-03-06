@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --color-accent: #7C3AED;
+  --color-accent-hover: #5B21B6;
+  --color-primary: #111827;
+  --color-muted: #6B7280;
+  --color-bg: #FFFFFF;
+  --color-surface: #F3F4F6;
+  --color-border: #D1D5DB;
+  --color-purple-light: #EDE9FE;
+}
