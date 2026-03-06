@@ -1,13 +1,15 @@
 import { useApp } from '../context/AppContext'
+import { useLocale } from '../context/LocaleContext'
 import { GAME_MODES } from '../utils/dobbleDeck'
 
 export function GameModeSelector() {
+  const { t } = useLocale()
   const { gameMode, setGameMode } = useApp()
 
   return (
-    <section aria-label="Modo de juego">
-      <label htmlFor="game-mode" className="block text-sm font-medium text-slate-700 mb-2">
-        Modo de juego
+    <section aria-label={t('gameMode.ariaLabel')}>
+      <label htmlFor="game-mode" className="block text-sm font-medium text-palette-primary mb-2">
+        {t('gameMode.label')}
       </label>
       <select
         id="game-mode"
@@ -16,11 +18,11 @@ export function GameModeSelector() {
           const mode = GAME_MODES.find((m) => m.id === e.target.value)
           if (mode) setGameMode(mode)
         }}
-        className="w-full max-w-md rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-800 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+        className="w-full max-w-md rounded-10 border-2 border-palette-accentHover bg-white px-3 py-2 text-palette-primary shadow-sm focus:border-palette-accent focus:outline-none focus:ring-2 focus:ring-palette-accent"
       >
         {GAME_MODES.map((mode) => (
           <option key={mode.id} value={mode.id}>
-            {mode.label}
+            {t(`gameMode.${mode.id}`)}
           </option>
         ))}
       </select>

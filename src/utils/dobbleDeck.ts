@@ -32,18 +32,17 @@ export function generateDobbleDeck(n: number): number[][] {
 
 export interface GameMode {
   id: string
-  label: string
   order: number
   cardCount: number
   symbolsPerCard: number
 }
 
 export const GAME_MODES: GameMode[] = [
-  { id: 'quick', label: 'Partida rápida (7 cartas, 3 por carta)', order: 2, cardCount: 7, symbolsPerCard: 3 },
-  { id: 'mini', label: 'Partida mini (13 cartas, 4 por carta)', order: 3, cardCount: 13, symbolsPerCard: 4 },
-  { id: 'standard', label: 'Partida estándar (31 cartas, 6 por carta)', order: 5, cardCount: 31, symbolsPerCard: 6 },
-  { id: 'full', label: 'Partida completa (57 cartas, 8 por carta)', order: 7, cardCount: 57, symbolsPerCard: 8 },
-  { id: 'expert', label: 'Partida experta (133 cartas, 12 por carta)', order: 11, cardCount: 133, symbolsPerCard: 12 },
+  { id: 'quick', order: 2, cardCount: 7, symbolsPerCard: 3 },
+  { id: 'mini', order: 3, cardCount: 13, symbolsPerCard: 4 },
+  { id: 'standard', order: 5, cardCount: 31, symbolsPerCard: 6 },
+  { id: 'full', order: 7, cardCount: 57, symbolsPerCard: 8 },
+  { id: 'expert', order: 11, cardCount: 133, symbolsPerCard: 12 },
 ]
 
 export function getGameModeById(id: string): GameMode {
