@@ -4,7 +4,7 @@ export const translations: Record<
   Locale,
   {
     app: { title: string; subtitle: string; intro: string }
-    pdfPreview: { title: string; close: string }
+    pdfPreview: { title: string; close: string; openInNewTab: string }
     actions: { generatePdf: string; generating: string; generatePdfA11y: string }
     gameMode: {
       label: string
@@ -43,6 +43,7 @@ export const translations: Record<
     pdfPreview: {
       title: 'PDF Preview',
       close: 'Close',
+      openInNewTab: 'Open in new tab',
     },
     actions: {
       generatePdf: 'Generate PDF',
@@ -89,6 +90,7 @@ export const translations: Record<
     pdfPreview: {
       title: 'Vista previa del PDF',
       close: 'Cerrar',
+      openInNewTab: 'Abrir en nueva pestaña',
     },
     actions: {
       generatePdf: 'Generar PDF',
