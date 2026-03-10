@@ -33,7 +33,7 @@ interface AppState {
 
 const AppContext = createContext<AppState | null>(null)
 
-const DEFAULT_MODE_ID = 'full'
+const DEFAULT_MODE_ID = 'standard'
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [gameMode, setGameModeState] = useState<GameMode>(() =>
