@@ -1,0 +1,9 @@
+# Spot It (Dobble) Card Generator
+
+> Free web app to create custom Spot It (Dobble) printable card decks: choose a game mode, upload images, and download a PDF ready to print.
+
+This site is a single-page tool for generating printable Dobble/Spot It–style decks. Users pick a game mode (quick to expert), upload one image per symbol, and download a PDF. No sign-up required; everything runs in the browser.
+
+## Main
+
+- [Spot It (Dobble) Card Generator](/) – Create and download your custom printable deck.
