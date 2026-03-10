@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import { AppProvider, useApp } from './context/AppContext'
 import { useLocale } from './context/LocaleContext'
 import { GameModeSelector } from './components/GameModeSelector'
@@ -80,14 +81,25 @@ function AppContent() {
           <div>
             <h1 className="text-3xl font-bold text-palette-primary">{t('app.title')}</h1>
             <p className="text-palette-muted mt-2">{t('app.subtitle')}</p>
+            <p className="text-palette-muted mt-3 text-sm max-w-2xl">{t('app.intro')}</p>
           </div>
           <LanguageSelector />
         </div>
       </header>
 
       <main className="max-w-4xl mx-auto space-y-8">
-        <GameModeSelector />
-        <UploadZone />
+        <section aria-labelledby="game-mode-heading">
+          <h2 id="game-mode-heading" className="text-xl font-semibold text-palette-primary mb-3">
+            {t('gameMode.heading')}
+          </h2>
+          <GameModeSelector />
+        </section>
+        <section aria-labelledby="upload-heading">
+          <h2 id="upload-heading" className="text-xl font-semibold text-palette-primary mb-3">
+            {t('upload.heading')}
+          </h2>
+          <UploadZone />
+        </section>
 
         {hasImages && hasLayout && (
           <section className="flex justify-center">
@@ -115,6 +127,7 @@ export default function App() {
   return (
     <AppProvider>
       <AppContent />
+      <Analytics />
     </AppProvider>
   )
 }

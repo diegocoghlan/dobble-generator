@@ -3,11 +3,12 @@ export type Locale = 'en' | 'es'
 export const translations: Record<
   Locale,
   {
-    app: { title: string; subtitle: string }
+    app: { title: string; subtitle: string; intro: string }
     pdfPreview: { title: string; close: string }
     actions: { generatePdf: string; generating: string; generatePdfA11y: string }
     gameMode: {
       label: string
+      heading: string
       ariaLabel: string
       quick: string
       mini: string
@@ -16,6 +17,7 @@ export const translations: Record<
       expert: string
     }
     upload: {
+      heading: string
       ariaLabel: string
       description: string
       count: string
@@ -35,6 +37,8 @@ export const translations: Record<
     app: {
       title: 'Spot It (Dobble) Card Generator',
       subtitle: 'Choose the mode, upload your images and generate your printable deck.',
+      intro:
+        'Create custom Spot It (Dobble) printable card decks in your browser. Pick a game mode, upload one image per symbol, and download a PDF ready to print—free, with no sign-up.',
     },
     pdfPreview: {
       title: 'PDF Preview',
@@ -47,6 +51,7 @@ export const translations: Record<
     },
     gameMode: {
       label: 'Game mode',
+      heading: 'Choose game mode',
       ariaLabel: 'Game mode',
       quick: 'Quick game (7 cards, 3 per card)',
       mini: 'Mini game (13 cards, 4 per card)',
@@ -55,6 +60,7 @@ export const translations: Record<
       expert: 'Expert game (133 cards, 12 per card)',
     },
     upload: {
+      heading: 'Upload your images',
       ariaLabel: 'Image upload area',
       description: 'This mode uses {count} symbols. Upload {count} images (one per symbol).',
       count: '{filled} of {required} uploaded. You can add one at a time or several at once, and remove any with the X.',
@@ -77,6 +83,8 @@ export const translations: Record<
     app: {
       title: 'Generador de cartas Spot It (Dobble)',
       subtitle: 'Elige el modo, sube las imágenes y genera tu baraja imprimible.',
+      intro:
+        'Crea barajas de cartas Spot It (Dobble) imprimibles en el navegador. Elige un modo de juego, sube una imagen por símbolo y descarga un PDF listo para imprimir—gratis y sin registro.',
     },
     pdfPreview: {
       title: 'Vista previa del PDF',
@@ -89,6 +97,7 @@ export const translations: Record<
     },
     gameMode: {
       label: 'Modo de juego',
+      heading: 'Elige el modo de juego',
       ariaLabel: 'Modo de juego',
       quick: 'Partida rápida (7 cartas, 3 por carta)',
       mini: 'Partida mini (13 cartas, 4 por carta)',
@@ -97,6 +106,7 @@ export const translations: Record<
       expert: 'Partida experta (133 cartas, 12 por carta)',
     },
     upload: {
+      heading: 'Sube tus imágenes',
       ariaLabel: 'Zona de subida de imágenes',
       description: 'Este modo usa {count} símbolos. Sube {count} imágenes (una por cada símbolo).',
       count: '{filled} de {required} subidas. Puedes añadir de una en una o varias a la vez, y quitar cualquiera con la X.',
